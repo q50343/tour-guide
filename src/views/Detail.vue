@@ -194,7 +194,7 @@ export default {
           if (!data[props.mode + "ID"]) throw new Error();
           result.value = data;
           document.title =
-            result.value[props.mode + "Name"] + " - Travel Guide";
+            result.value[props.mode + "Name"] + " - tour guide";
           setTimeout(() => (loading.value = 1), 500);
           window.scrollTo({ top: 0, behavior: "smooth" });
         })

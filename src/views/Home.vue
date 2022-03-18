@@ -47,7 +47,7 @@ export default {
     const getImgUrl = (pic) => require("../assets/images/city_" + pic + ".jpg");
 
     onMounted(() => {
-      document.title = "Travel Guide";
+      document.title = "tour guide";
       dataFilter(sloganLib, 1).then((res) => (ranSlogan.value = res[0]));
       dataFilter(Object.entries(cityLib), 7).then(
         (res) => (ranCity.value = res)

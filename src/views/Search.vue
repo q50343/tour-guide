@@ -2,7 +2,7 @@
   <div>
   <div class='search' v-if='loading === 1'>
     <div class='banner shadow'>
-      <img class='banner-img' :src='getUrl()' alt='Travel Guide' title='Travel Guide'/>
+      <img class='banner-img' :src='getUrl()' alt='tour guide' title='tour guide'/>
       <h1 class='banner-text' v-text='getTitle()'></h1>
     </div>
     <div class='mode'>
@@ -63,8 +63,8 @@
       <img
         class='banner-loading'
         src='../assets/images/banner_Home.png'
-        alt='Travel Guide'
-        title='Travel Guide'
+        alt='tour guide'
+        title='tour guide'
       />
     </div>
     <div class='mode'></div>
@@ -75,8 +75,8 @@
       <img
         class='banner-img'
         :src='getUrl()'
-        alt='Travel Guide'
-        title='Travel Guide'
+        alt='tour guide'
+        title='tour guide'
       />
     </div>
     <Error />
