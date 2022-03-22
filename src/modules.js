@@ -20,27 +20,25 @@ const perPage = 18 // 每頁顯示筆數
 
 // 抓取 景點/餐飲/旅宿/活動 相關資料
 const getTravelInfo = (mode, city, page = 1, keyword = null) => {
-  city = city === 'Taiwan' ? '' : city
+  city = city === 'Taiwan' ? '' : city;
   let url = `https://ptx.transportdata.tw/MOTC/v2/Tourism/${mode}/${city}?`
   url += `$top=${perPage}&$skip=${(page - 1) * perPage}&$format=JSON`
   url += `&$select=${mode}ID,${mode}Name,Address,Picture`
-  if (mode === 'ScenicSpot') url += ',Class1,Class2,Class3,OpenTime,TicketInfo'
-  if (mode === 'Restaurant') url += ',Class,OpenTime'
-  if (mode === 'Hotel') url += ',Class'
-  if (mode === 'Activity') url += ',Class1,Class2'
+  if (mode === 'ScenicSpot') url += ',Class1,Class2,Class3,OpenTime,TicketInfo';
+  if (mode === 'Restaurant') url += ',Class,OpenTime';
+  if (mode === 'Hotel') url += ',Class';
+  if (mode === 'Activity') url += ',Class1,Class2';
   url += `&$filter=Picture/PictureUrl1 ne null`
   if (keyword) {
-    let filter = ''
+    let filter = '';
     keyword.split(',').forEach((k) => {
-      filter += ` or contains(Name,'${k}')`
-      if (mode === 'Restaurant' || mode === 'Hotel') {
-        filter += ` or contains(Class,'${k}')`
-      }
-      if (mode === 'ScenicSpot' || mode === 'Activity') {
-        filter += ` or contains(Class1,'${k}') or contains(Class2,'${k}')`
-      }
-      if (mode === 'ScenicSpot') filter += ` or contains(Class3,'${k}')`
-    })
+      filter += ` or contains(${mode}Name,'${k}')`;
+      if (mode === 'Restaurant' || mode === 'Hotel')
+        filter += ` or contains(Class,'${k}')`;
+      if (mode === 'ScenicSpot' || mode === 'Activity')
+        filter += ` or contains(Class1,'${k}') or contains(Class2,'${k}')`;
+      if (mode === 'ScenicSpot') filter += ` or contains(Class3,'${k}')`;
+    });
     filter = filter.replace(' or ', '')
     url += ` and (${filter})`
   }
@@ -71,13 +69,14 @@ const getDetail = (ID) => {
     .then((res) => {
       if (res.length === 0) throw new Error()
       res[0].modeName = getMode(res[0].ID)
-      if (res[0].Description) res[0].Description = res[0].Description.split('。').join('。\n\n')
-      if (res[0].DescriptionDetail) res[0].DescriptionDetail = res[0].DescriptionDetail.split('。').join('。\n\n')
-      if (res[0].TravelInfo) res[0].TravelInfo = res[0].TravelInfo.split('。').join('。\n\n')
-      if (res[0].ParkingInfo) res[0].ParkingInfo = res[0].ParkingInfo + '\n\n'
-      if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split('T')[0]
-      if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split('T')[0]
-      if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime
+      if (res[0].Description) res[0].Description = res[0].Description.split('。').join('。\n\n');
+      if (res[0].DescriptionDetail) res[0].DescriptionDetail = res[0].DescriptionDetail.split('。').join('。\n\n');
+      if (res[0].TravelInfo) res[0].TravelInfo = res[0].TravelInfo.split('。').join('。\n\n');
+      if (res[0].ParkingInfo) res[0].ParkingInfo = res[0].ParkingInfo + '\n\n';
+      if (res[0].StartTime) res[0].StartTime = res[0].StartTime.split('T')[0];
+      if (res[0].EndTime) res[0].EndTime = res[0].EndTime.split('T')[0];
+      if (res[0].StartTime === res[0].EndTime) res[0].Date = res[0].EndTime;
+      res[0].getMode = getMode(ID, true)
       return res[0]
     })
 }
