@@ -6,10 +6,10 @@
       <h1 class='banner-text' v-text='getTitle()'></h1>
     </div>
     <div class='mode'>
-      <span class="mode-btn bdrs-sm" v-for="item in Object.keys(modeLibs)" :key="item"
-        :class='{active: mode === item}' @click="setMode(item)">
-        <router-link :to='getLink(item)' replace>{{modeLib[item]}}</router-link>
-      </span>
+      <router-link :to='getLink(item)' class="mode-btn bdrs-sm" replace 
+        :class='{active: mode === item}' @click="setMode(item)"
+        v-for="item in Object.keys(modeLibs)" :key="item">{{modeLibs[item]}}
+      </router-link>
     </div>
     <div :class="'card-' + mode">
       <router-link :to="`/D/${item[mode + 'ID']}/`" class='card bdrs-sm'

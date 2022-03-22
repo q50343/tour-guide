@@ -1,17 +1,18 @@
 // API 驗證
-import jssha from 'jssha/dist/sha1'
-const JsSHA = jssha
+import jsSHA from "jssha/dist/sha1";
 const getAuthHeader = () => {
-  const AppID = 'e30366bf9f3244b29a68930d3be91c44'
-  const AppKey = 'PCVAmBmfw_ph88xal8EXJMIy9bg'
-  const GMTString = new Date().toGMTString()
-  const ShaObj = new JsSHA('SHA-1', 'TEXT')
-  ShaObj.setHMACKey(AppKey, 'TEXT')
-  ShaObj.update('x-date: ' + GMTString)
-  const HMAC = ShaObj.getHMAC('B64')
-  const Authorization = `hmac username='${AppID}', algorithm='hmac-sha1', headers='x-date', signature='${HMAC}'`
-  return { Authorization: Authorization, 'X-Date': GMTString }
-}
+  const AppID = 'e30366bf9f3244b29a68930d3be91c44';
+  const AppKey = 'PCVAmBmfw_ph88xal8EXJMIy9bg';
+
+  const GMTString = new Date().toGMTString();
+  const ShaObj = new jsSHA("SHA-1", "TEXT");
+
+  ShaObj.setHMACKey(AppKey, "TEXT");
+  ShaObj.update("x-date: " + GMTString);
+  const HMAC = ShaObj.getHMAC("B64");
+  const Authorization = `hmac username="${AppID}", algorithm="hmac-sha1", headers="x-date", signature="${HMAC}"`;
+  return { Authorization: Authorization, "X-Date": GMTString };
+};
 
 const perPage = 18 // 每頁顯示筆數
 // mode => ScenicSpot/Restaurant/Hotel/Activity
