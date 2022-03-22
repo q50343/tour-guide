@@ -68,7 +68,7 @@ const getDetail = (ID) => {
     .then((res) => res.json())
     .then((res) => {
       if (res.length === 0) throw new Error()
-      res[0].modeName = getMode(res[0].ID)
+      res[0].modeName = getMode(res[0][getMode(ID, true) + 'ID']);
       if (res[0].Description) res[0].Description = res[0].Description.split('。').join('。\n\n');
       if (res[0].DescriptionDetail) res[0].DescriptionDetail = res[0].DescriptionDetail.split('。').join('。\n\n');
       if (res[0].TravelInfo) res[0].TravelInfo = res[0].TravelInfo.split('。').join('。\n\n');
